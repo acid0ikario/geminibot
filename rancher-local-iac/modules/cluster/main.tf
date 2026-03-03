@@ -37,6 +37,11 @@ EOF
         host_port      = 443
         protocol       = "TCP"
       }
+
+      extra_mounts {
+        host_path      = "${path.cwd}/rancher-data"
+        container_path = "/var/lib/rancher"
+      }
     }
   }
 }
