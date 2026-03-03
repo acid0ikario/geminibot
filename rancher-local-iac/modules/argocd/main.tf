@@ -29,48 +29,13 @@ resource "helm_release" "argocd" {
         ingressClassName: nginx
         hostname: ${var.argocd_hostname}
     
+    # Mantener el volumen temporalmente para limpiar el despliegue corrupto
     repoServer:
-      env:
-        - name: SOPS_AGE_KEY_FILE
-          value: /home/argocd/.config/sops/age/keys.txt
-      
-      # Init container para descargar SOPS
-      extraContainers:
-        - name: sops-bin
-          image: alpine:latest
-          command: ["/bin/sh", "-c"]
-          args:
-            - wget -O /sopsbin/sops https://github.com/getsops/sops/releases/download/v3.8.1/sops-v3.8.1.linux.amd64 && chmod +x /sopsbin/sops && sleep 3600
-          volumeMounts:
-            - name: sops-bin
-              mountPath: /sopsbin
-
       volumes:
-        - name: sops-bin
+        - name: plugins
           emptyDir: {}
-        - name: sops-age-key
-          secret:
-            secretName: sops-age-key
-
-      volumeMounts:
-        - name: sops-bin
-          mountPath: /usr/local/bin/sops
-          subPath: sops
-        - name: sops-age-key
-          mountPath: /home/argocd/.config/sops/age/
     EOF
   ]
-}
-
-resource "kubernetes_secret" "sops_age_key" {
-  metadata {
-    name      = "sops-age-key"
-    namespace = "argocd"
-  }
-
-  data = {
-    "keys.txt" = base64encode(var.sops_age_secret_key)
-  }
 }
 
 resource "kubernetes_secret" "argocd_repo_creds" {
