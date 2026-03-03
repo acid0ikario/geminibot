@@ -13,7 +13,7 @@ variable "rancher_hostname" {
 variable "rancher_password" {
   description = "Contraseña inicial (bootstrap) para el usuario admin de Rancher"
   type        = string
-  default     = "admin12345"
+  sensitive   = true
 }
 
 variable "argocd_hostname" {
@@ -26,4 +26,16 @@ variable "workloads_repo_url" {
   description = "URL del repositorio de workloads para ArgoCD"
   type        = string
   default     = "https://github.com/acid0ikario/k8s-workloads.git"
+}
+
+variable "github_token" {
+  description = "GitHub Personal Access Token para autenticación de ArgoCD"
+  type        = string
+  sensitive   = true
+}
+
+variable "sops_age_secret_key" {
+  description = "Clave privada de Age para desencriptar secretos con SOPS"
+  type        = string
+  sensitive   = true
 }
