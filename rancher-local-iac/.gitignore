@@ -1,0 +1,25 @@
+# .gitignore for rancher-local-iac
+
+# Terraform
+.terraform/
+**/.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfplan
+terraform.tfvars
+terraform.tfvars.json
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraform.lock.hcl
+**/.terraform.lock.hcl
+
+# Local Kind and Kubeconfig
+rancher-local-config
+kubeconfig*
+.kube/
+
+# OS/System files
+.DS_Store
+Thumbs.db
