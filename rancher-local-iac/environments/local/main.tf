@@ -10,3 +10,11 @@ module "rancher_stack" {
 
   depends_on = [module.cluster]
 }
+
+module "argocd" {
+  source             = "../../modules/argocd"
+  argocd_hostname    = var.argocd_hostname
+  workloads_repo_url = var.workloads_repo_url
+
+  depends_on = [module.cluster, module.rancher_stack]
+}
