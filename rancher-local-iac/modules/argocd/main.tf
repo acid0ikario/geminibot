@@ -28,6 +28,8 @@ resource "helm_release" "argocd" {
         enabled: true
         ingressClassName: nginx
         hostname: ${var.argocd_hostname}
+        hosts:
+          - ${var.argocd_hostname}
     
     # Mantener el volumen temporalmente para limpiar el despliegue corrupto
     repoServer:
