@@ -20,3 +20,8 @@ module "argocd" {
 
   depends_on = [module.cluster, module.rancher_stack]
 }
+
+module "istio" {
+  source     = "../../modules/istio"
+  depends_on = [module.cluster]
+}
