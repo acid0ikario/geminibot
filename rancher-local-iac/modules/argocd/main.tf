@@ -30,12 +30,6 @@ resource "helm_release" "argocd" {
         hostname: ${var.argocd_hostname}
         hosts:
           - ${var.argocd_hostname}
-    
-    # Mantener el volumen temporalmente para limpiar el despliegue corrupto
-    repoServer:
-      volumes:
-        - name: plugins
-          emptyDir: {}
     EOF
   ]
 }
