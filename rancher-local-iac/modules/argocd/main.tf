@@ -70,7 +70,7 @@ resource "helm_release" "argocd_apps" {
         source:
           repoURL: ${var.workloads_repo_url}
           targetRevision: master
-          path: apps
+          path: bootstrap
         destination:
           server: https://kubernetes.default.svc
           namespace: argocd
